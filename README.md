@@ -1,198 +1,451 @@
-<a href="http://fvcproductions.com"><img src="https://avatars1.githubusercontent.com/u/4284691?v=3&s=200" title="FVCproductions" alt="FVCproductions"></a>
 
-<!-- [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) -->
-
-***INSERT GRAPHIC HERE (include hyperlink in image)***
-
-# Repository Title Goes Here
-
-> Subtitle or Short Description Goes Here
-
-> ideally one sentence
-
-> include terms/tags that can be searched
-
-**Badges will go here**
-
-- build status
-- issues (waffle.io maybe)
-- devDependencies
-- npm package
-- coverage
-- slack
-- downloads
-- gitter chat
-- license
-- etc.
-
-[![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger) [![Dependency Status](http://img.shields.io/gemnasium/badges/badgerbadgerbadger.svg?style=flat-square)](https://gemnasium.com/badges/badgerbadgerbadger) [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger) [![Code Climate](http://img.shields.io/codeclimate/github/badges/badgerbadgerbadger.svg?style=flat-square)](https://codeclimate.com/github/badges/badgerbadgerbadger) [![Github Issues](http://githubbadges.herokuapp.com/badges/badgerbadgerbadger/issues.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger/issues) [![Pending Pull-Requests](http://githubbadges.herokuapp.com/badges/badgerbadgerbadger/pulls.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger/pulls) [![Gem Version](http://img.shields.io/gem/v/badgerbadgerbadger.svg?style=flat-square)](https://rubygems.org/gems/badgerbadgerbadger) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org) [![Badges](http://img.shields.io/:badges-9/9-ff6799.svg?style=flat-square)](https://github.com/badges/badgerbadgerbadger)
-
-- For more on these wonderful ~~badgers~~ badges, refer to <a href="http://badges.github.io/badgerbadgerbadger/" target="_blank">`badgerbadgerbadger`</a>.
-
-***INSERT ANOTHER GRAPHIC HERE***
-
-[![INSERT YOUR GRAPHIC HERE](http://i.imgur.com/dt8AUb6.png)]()
-
-- Most people will glance at your `README`, *maybe* star it, and leave
-- Ergo, people should understand instantly what your project is about based on your repo
-
-> Tips
-
-- HAVE WHITE SPACE
-- MAKE IT PRETTY
-- GIFS ARE REALLY COOL
-
-> GIF Tools
-
-- Use <a href="http://recordit.co/" target="_blank">**Recordit**</a> to create quicks screencasts of your desktop and export them as `GIF`s.
-- For terminal sessions, there's <a href="https://github.com/chjj/ttystudio" target="_blank">**ttystudio**</a> which also supports exporting `GIF`s.
-
-**Recordit**
-
-![Recordit GIF](http://g.recordit.co/iLN6A0vSD8.gif)
-
-**ttystudio**
-
-![ttystudio GIF](https://raw.githubusercontent.com/chjj/ttystudio/master/img/example.gif)
-
----
 
 ## Table of Contents (Optional)
 
 > If your `README` has a lot of info, section headers might be nice.
 
-- [Installation](#installation)
-- [Features](#features)
-- [Contributing](#contributing)
-- [Team](#team)
-- [FAQ](#faq)
-- [Support](#support)
-- [License](#license)
-
-
----
-
-## Example (Optional)
-
-```javascript
-// code away!
-
-let generateProject = project => {
-  let code = [];
-  for (let js = 0; js < project.length; js++) {
-    code.push(js);
-  }
-};
-```
+- [Data collection](#Data collection)
+- [Understanding the data](#Understanding the data)
+- [Data Cleaning](#Data Cleaning)
+- [Loading the training setTeam](#Loading the training set)
+- [Data Preprocessing — Images](#Data Preprocessing — Images)
+- [Data Preprocessing — Captions](#Data Preprocessing — Captions)
+- [Word Embeddings](#Word Embeddings)
+- [Model Architecture](#Model Architecture)
 
 ---
+
 
 ## Installation
+### from conda
+- `conda install -c anaconda tensorflow-gpu` 
+### from pip
+- `pip install tensorflow-gpu` 
 
-- All the `code` required to get started
-- Images of what it should look like
-
-### Clone
-
-- Clone this repo to your local machine using `https://github.com/fvcproductions/SOMEREPO`
-
-### Setup
-
-- If you want more syntax highlighting, format your code like this:
-
-> update and install this package first
-
-```shell
-$ brew update
-$ brew install fvcproductions
-```
-
-> now install npm and bower packages
-
-```shell
-$ npm install
-$ bower install
-```
-
-- For all the possible languages that support syntax highlithing on GitHub (which is basically all of them), refer <a href="https://github.com/github/linguist/blob/master/lib/linguist/languages.yml" target="_blank">here</a>.
+## Data collection
+- <a href="https://www.kaggle.com/ming666/flicker8k-dataset" target="_blank">Data Set</a> .
 
 ---
 
-## Features
-## Usage (Optional)
-## Documentation (Optional)
-## Tests (Optional)
+## Understanding the data
+- Data set consist of 8000 images . each consist of 5 captions describing about the image.
 
-- Going into more detail on code and technologies used
-- I utilized this nifty <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheatsheet</a> for this sample `README`.
+## Data Cleaning
+- For cleaning the data we used Resnet50 inbuilt Preprocess_input Function to preprocess the image
 
+## Loading the training setData Cleaning
+- We encode the image by loading each image with help of load_img set target size 224x224 bcoz of Resnet50
+- We convert the image to arrays and expand its dimension bcoz it expects batch size also
+- then call keras preprocess_input on each image
+
+## Data Preprocessing — Captions
+- First load the captions 
+- Convert it to Lower case
+- remove everything which are not words
+- then tokenize it and store unique words
+- Convert every token into index and vice versa
 ---
 
-## Contributing
+## Word Embeddings
+- then convert into word embeddings using glove-vector
 
 > To get started...
 
-### Step 1
+### Model Architecture
+- This is how our model strucure look like
+- we change number of class and merge Rnn model with it
+```shell
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_2 (InputLayer)            (None, 224, 224, 3)  0                                            
+__________________________________________________________________________________________________
+conv1_pad (ZeroPadding2D)       (None, 230, 230, 3)  0           input_2[0][0]                    
+__________________________________________________________________________________________________
+conv1 (Conv2D)                  (None, 112, 112, 64) 9472        conv1_pad[0][0]                  
+__________________________________________________________________________________________________
+bn_conv1 (BatchNormalization)   (None, 112, 112, 64) 256         conv1[0][0]                      
+__________________________________________________________________________________________________
+activation_50 (Activation)      (None, 112, 112, 64) 0           bn_conv1[0][0]                   
+__________________________________________________________________________________________________
+pool1_pad (ZeroPadding2D)       (None, 114, 114, 64) 0           activation_50[0][0]              
+__________________________________________________________________________________________________
+max_pooling2d_2 (MaxPooling2D)  (None, 56, 56, 64)   0           pool1_pad[0][0]                  
+__________________________________________________________________________________________________
+res2a_branch2a (Conv2D)         (None, 56, 56, 64)   4160        max_pooling2d_2[0][0]            
+__________________________________________________________________________________________________
+bn2a_branch2a (BatchNormalizati (None, 56, 56, 64)   256         res2a_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_51 (Activation)      (None, 56, 56, 64)   0           bn2a_branch2a[0][0]              
+__________________________________________________________________________________________________
+res2a_branch2b (Conv2D)         (None, 56, 56, 64)   36928       activation_51[0][0]              
+__________________________________________________________________________________________________
+bn2a_branch2b (BatchNormalizati (None, 56, 56, 64)   256         res2a_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_52 (Activation)      (None, 56, 56, 64)   0           bn2a_branch2b[0][0]              
+__________________________________________________________________________________________________
+res2a_branch2c (Conv2D)         (None, 56, 56, 256)  16640       activation_52[0][0]              
+__________________________________________________________________________________________________
+res2a_branch1 (Conv2D)          (None, 56, 56, 256)  16640       max_pooling2d_2[0][0]            
+__________________________________________________________________________________________________
+bn2a_branch2c (BatchNormalizati (None, 56, 56, 256)  1024        res2a_branch2c[0][0]             
+__________________________________________________________________________________________________
+bn2a_branch1 (BatchNormalizatio (None, 56, 56, 256)  1024        res2a_branch1[0][0]              
+__________________________________________________________________________________________________
+add_17 (Add)                    (None, 56, 56, 256)  0           bn2a_branch2c[0][0]              
+                                                                 bn2a_branch1[0][0]               
+__________________________________________________________________________________________________
+activation_53 (Activation)      (None, 56, 56, 256)  0           add_17[0][0]                     
+__________________________________________________________________________________________________
+res2b_branch2a (Conv2D)         (None, 56, 56, 64)   16448       activation_53[0][0]              
+__________________________________________________________________________________________________
+bn2b_branch2a (BatchNormalizati (None, 56, 56, 64)   256         res2b_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_54 (Activation)      (None, 56, 56, 64)   0           bn2b_branch2a[0][0]              
+__________________________________________________________________________________________________
+res2b_branch2b (Conv2D)         (None, 56, 56, 64)   36928       activation_54[0][0]              
+__________________________________________________________________________________________________
+bn2b_branch2b (BatchNormalizati (None, 56, 56, 64)   256         res2b_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_55 (Activation)      (None, 56, 56, 64)   0           bn2b_branch2b[0][0]              
+__________________________________________________________________________________________________
+res2b_branch2c (Conv2D)         (None, 56, 56, 256)  16640       activation_55[0][0]              
+__________________________________________________________________________________________________
+bn2b_branch2c (BatchNormalizati (None, 56, 56, 256)  1024        res2b_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_18 (Add)                    (None, 56, 56, 256)  0           bn2b_branch2c[0][0]              
+                                                                 activation_53[0][0]              
+__________________________________________________________________________________________________
+activation_56 (Activation)      (None, 56, 56, 256)  0           add_18[0][0]                     
+__________________________________________________________________________________________________
+res2c_branch2a (Conv2D)         (None, 56, 56, 64)   16448       activation_56[0][0]              
+__________________________________________________________________________________________________
+bn2c_branch2a (BatchNormalizati (None, 56, 56, 64)   256         res2c_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_57 (Activation)      (None, 56, 56, 64)   0           bn2c_branch2a[0][0]              
+__________________________________________________________________________________________________
+res2c_branch2b (Conv2D)         (None, 56, 56, 64)   36928       activation_57[0][0]              
+__________________________________________________________________________________________________
+bn2c_branch2b (BatchNormalizati (None, 56, 56, 64)   256         res2c_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_58 (Activation)      (None, 56, 56, 64)   0           bn2c_branch2b[0][0]              
+__________________________________________________________________________________________________
+res2c_branch2c (Conv2D)         (None, 56, 56, 256)  16640       activation_58[0][0]              
+__________________________________________________________________________________________________
+bn2c_branch2c (BatchNormalizati (None, 56, 56, 256)  1024        res2c_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_19 (Add)                    (None, 56, 56, 256)  0           bn2c_branch2c[0][0]              
+                                                                 activation_56[0][0]              
+__________________________________________________________________________________________________
+activation_59 (Activation)      (None, 56, 56, 256)  0           add_19[0][0]                     
+__________________________________________________________________________________________________
+res3a_branch2a (Conv2D)         (None, 28, 28, 128)  32896       activation_59[0][0]              
+__________________________________________________________________________________________________
+bn3a_branch2a (BatchNormalizati (None, 28, 28, 128)  512         res3a_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_60 (Activation)      (None, 28, 28, 128)  0           bn3a_branch2a[0][0]              
+__________________________________________________________________________________________________
+res3a_branch2b (Conv2D)         (None, 28, 28, 128)  147584      activation_60[0][0]              
+__________________________________________________________________________________________________
+bn3a_branch2b (BatchNormalizati (None, 28, 28, 128)  512         res3a_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_61 (Activation)      (None, 28, 28, 128)  0           bn3a_branch2b[0][0]              
+__________________________________________________________________________________________________
+res3a_branch2c (Conv2D)         (None, 28, 28, 512)  66048       activation_61[0][0]              
+__________________________________________________________________________________________________
+res3a_branch1 (Conv2D)          (None, 28, 28, 512)  131584      activation_59[0][0]              
+__________________________________________________________________________________________________
+bn3a_branch2c (BatchNormalizati (None, 28, 28, 512)  2048        res3a_branch2c[0][0]             
+__________________________________________________________________________________________________
+bn3a_branch1 (BatchNormalizatio (None, 28, 28, 512)  2048        res3a_branch1[0][0]              
+__________________________________________________________________________________________________
+add_20 (Add)                    (None, 28, 28, 512)  0           bn3a_branch2c[0][0]              
+                                                                 bn3a_branch1[0][0]               
+__________________________________________________________________________________________________
+activation_62 (Activation)      (None, 28, 28, 512)  0           add_20[0][0]                     
+__________________________________________________________________________________________________
+res3b_branch2a (Conv2D)         (None, 28, 28, 128)  65664       activation_62[0][0]              
+__________________________________________________________________________________________________
+bn3b_branch2a (BatchNormalizati (None, 28, 28, 128)  512         res3b_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_63 (Activation)      (None, 28, 28, 128)  0           bn3b_branch2a[0][0]              
+__________________________________________________________________________________________________
+res3b_branch2b (Conv2D)         (None, 28, 28, 128)  147584      activation_63[0][0]              
+__________________________________________________________________________________________________
+bn3b_branch2b (BatchNormalizati (None, 28, 28, 128)  512         res3b_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_64 (Activation)      (None, 28, 28, 128)  0           bn3b_branch2b[0][0]              
+__________________________________________________________________________________________________
+res3b_branch2c (Conv2D)         (None, 28, 28, 512)  66048       activation_64[0][0]              
+__________________________________________________________________________________________________
+bn3b_branch2c (BatchNormalizati (None, 28, 28, 512)  2048        res3b_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_21 (Add)                    (None, 28, 28, 512)  0           bn3b_branch2c[0][0]              
+                                                                 activation_62[0][0]              
+__________________________________________________________________________________________________
+activation_65 (Activation)      (None, 28, 28, 512)  0           add_21[0][0]                     
+__________________________________________________________________________________________________
+res3c_branch2a (Conv2D)         (None, 28, 28, 128)  65664       activation_65[0][0]              
+__________________________________________________________________________________________________
+bn3c_branch2a (BatchNormalizati (None, 28, 28, 128)  512         res3c_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_66 (Activation)      (None, 28, 28, 128)  0           bn3c_branch2a[0][0]              
+__________________________________________________________________________________________________
+res3c_branch2b (Conv2D)         (None, 28, 28, 128)  147584      activation_66[0][0]              
+__________________________________________________________________________________________________
+bn3c_branch2b (BatchNormalizati (None, 28, 28, 128)  512         res3c_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_67 (Activation)      (None, 28, 28, 128)  0           bn3c_branch2b[0][0]              
+__________________________________________________________________________________________________
+res3c_branch2c (Conv2D)         (None, 28, 28, 512)  66048       activation_67[0][0]              
+__________________________________________________________________________________________________
+bn3c_branch2c (BatchNormalizati (None, 28, 28, 512)  2048        res3c_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_22 (Add)                    (None, 28, 28, 512)  0           bn3c_branch2c[0][0]              
+                                                                 activation_65[0][0]              
+__________________________________________________________________________________________________
+activation_68 (Activation)      (None, 28, 28, 512)  0           add_22[0][0]                     
+__________________________________________________________________________________________________
+res3d_branch2a (Conv2D)         (None, 28, 28, 128)  65664       activation_68[0][0]              
+__________________________________________________________________________________________________
+bn3d_branch2a (BatchNormalizati (None, 28, 28, 128)  512         res3d_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_69 (Activation)      (None, 28, 28, 128)  0           bn3d_branch2a[0][0]              
+__________________________________________________________________________________________________
+res3d_branch2b (Conv2D)         (None, 28, 28, 128)  147584      activation_69[0][0]              
+__________________________________________________________________________________________________
+bn3d_branch2b (BatchNormalizati (None, 28, 28, 128)  512         res3d_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_70 (Activation)      (None, 28, 28, 128)  0           bn3d_branch2b[0][0]              
+__________________________________________________________________________________________________
+res3d_branch2c (Conv2D)         (None, 28, 28, 512)  66048       activation_70[0][0]              
+__________________________________________________________________________________________________
+bn3d_branch2c (BatchNormalizati (None, 28, 28, 512)  2048        res3d_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_23 (Add)                    (None, 28, 28, 512)  0           bn3d_branch2c[0][0]              
+                                                                 activation_68[0][0]              
+__________________________________________________________________________________________________
+activation_71 (Activation)      (None, 28, 28, 512)  0           add_23[0][0]                     
+__________________________________________________________________________________________________
+res4a_branch2a (Conv2D)         (None, 14, 14, 256)  131328      activation_71[0][0]              
+__________________________________________________________________________________________________
+bn4a_branch2a (BatchNormalizati (None, 14, 14, 256)  1024        res4a_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_72 (Activation)      (None, 14, 14, 256)  0           bn4a_branch2a[0][0]              
+__________________________________________________________________________________________________
+res4a_branch2b (Conv2D)         (None, 14, 14, 256)  590080      activation_72[0][0]              
+__________________________________________________________________________________________________
+bn4a_branch2b (BatchNormalizati (None, 14, 14, 256)  1024        res4a_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_73 (Activation)      (None, 14, 14, 256)  0           bn4a_branch2b[0][0]              
+__________________________________________________________________________________________________
+res4a_branch2c (Conv2D)         (None, 14, 14, 1024) 263168      activation_73[0][0]              
+__________________________________________________________________________________________________
+res4a_branch1 (Conv2D)          (None, 14, 14, 1024) 525312      activation_71[0][0]              
+__________________________________________________________________________________________________
+bn4a_branch2c (BatchNormalizati (None, 14, 14, 1024) 4096        res4a_branch2c[0][0]             
+__________________________________________________________________________________________________
+bn4a_branch1 (BatchNormalizatio (None, 14, 14, 1024) 4096        res4a_branch1[0][0]              
+__________________________________________________________________________________________________
+add_24 (Add)                    (None, 14, 14, 1024) 0           bn4a_branch2c[0][0]              
+                                                                 bn4a_branch1[0][0]               
+__________________________________________________________________________________________________
+activation_74 (Activation)      (None, 14, 14, 1024) 0           add_24[0][0]                     
+__________________________________________________________________________________________________
+res4b_branch2a (Conv2D)         (None, 14, 14, 256)  262400      activation_74[0][0]              
+__________________________________________________________________________________________________
+bn4b_branch2a (BatchNormalizati (None, 14, 14, 256)  1024        res4b_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_75 (Activation)      (None, 14, 14, 256)  0           bn4b_branch2a[0][0]              
+__________________________________________________________________________________________________
+res4b_branch2b (Conv2D)         (None, 14, 14, 256)  590080      activation_75[0][0]              
+__________________________________________________________________________________________________
+bn4b_branch2b (BatchNormalizati (None, 14, 14, 256)  1024        res4b_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_76 (Activation)      (None, 14, 14, 256)  0           bn4b_branch2b[0][0]              
+__________________________________________________________________________________________________
+res4b_branch2c (Conv2D)         (None, 14, 14, 1024) 263168      activation_76[0][0]              
+__________________________________________________________________________________________________
+bn4b_branch2c (BatchNormalizati (None, 14, 14, 1024) 4096        res4b_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_25 (Add)                    (None, 14, 14, 1024) 0           bn4b_branch2c[0][0]              
+                                                                 activation_74[0][0]              
+__________________________________________________________________________________________________
+activation_77 (Activation)      (None, 14, 14, 1024) 0           add_25[0][0]                     
+__________________________________________________________________________________________________
+res4c_branch2a (Conv2D)         (None, 14, 14, 256)  262400      activation_77[0][0]              
+__________________________________________________________________________________________________
+bn4c_branch2a (BatchNormalizati (None, 14, 14, 256)  1024        res4c_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_78 (Activation)      (None, 14, 14, 256)  0           bn4c_branch2a[0][0]              
+__________________________________________________________________________________________________
+res4c_branch2b (Conv2D)         (None, 14, 14, 256)  590080      activation_78[0][0]              
+__________________________________________________________________________________________________
+bn4c_branch2b (BatchNormalizati (None, 14, 14, 256)  1024        res4c_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_79 (Activation)      (None, 14, 14, 256)  0           bn4c_branch2b[0][0]              
+__________________________________________________________________________________________________
+res4c_branch2c (Conv2D)         (None, 14, 14, 1024) 263168      activation_79[0][0]              
+__________________________________________________________________________________________________
+bn4c_branch2c (BatchNormalizati (None, 14, 14, 1024) 4096        res4c_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_26 (Add)                    (None, 14, 14, 1024) 0           bn4c_branch2c[0][0]              
+                                                                 activation_77[0][0]              
+__________________________________________________________________________________________________
+activation_80 (Activation)      (None, 14, 14, 1024) 0           add_26[0][0]                     
+__________________________________________________________________________________________________
+res4d_branch2a (Conv2D)         (None, 14, 14, 256)  262400      activation_80[0][0]              
+__________________________________________________________________________________________________
+bn4d_branch2a (BatchNormalizati (None, 14, 14, 256)  1024        res4d_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_81 (Activation)      (None, 14, 14, 256)  0           bn4d_branch2a[0][0]              
+__________________________________________________________________________________________________
+res4d_branch2b (Conv2D)         (None, 14, 14, 256)  590080      activation_81[0][0]              
+__________________________________________________________________________________________________
+bn4d_branch2b (BatchNormalizati (None, 14, 14, 256)  1024        res4d_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_82 (Activation)      (None, 14, 14, 256)  0           bn4d_branch2b[0][0]              
+__________________________________________________________________________________________________
+res4d_branch2c (Conv2D)         (None, 14, 14, 1024) 263168      activation_82[0][0]              
+__________________________________________________________________________________________________
+bn4d_branch2c (BatchNormalizati (None, 14, 14, 1024) 4096        res4d_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_27 (Add)                    (None, 14, 14, 1024) 0           bn4d_branch2c[0][0]              
+                                                                 activation_80[0][0]              
+__________________________________________________________________________________________________
+activation_83 (Activation)      (None, 14, 14, 1024) 0           add_27[0][0]                     
+__________________________________________________________________________________________________
+res4e_branch2a (Conv2D)         (None, 14, 14, 256)  262400      activation_83[0][0]              
+__________________________________________________________________________________________________
+bn4e_branch2a (BatchNormalizati (None, 14, 14, 256)  1024        res4e_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_84 (Activation)      (None, 14, 14, 256)  0           bn4e_branch2a[0][0]              
+__________________________________________________________________________________________________
+res4e_branch2b (Conv2D)         (None, 14, 14, 256)  590080      activation_84[0][0]              
+__________________________________________________________________________________________________
+bn4e_branch2b (BatchNormalizati (None, 14, 14, 256)  1024        res4e_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_85 (Activation)      (None, 14, 14, 256)  0           bn4e_branch2b[0][0]              
+__________________________________________________________________________________________________
+res4e_branch2c (Conv2D)         (None, 14, 14, 1024) 263168      activation_85[0][0]              
+__________________________________________________________________________________________________
+bn4e_branch2c (BatchNormalizati (None, 14, 14, 1024) 4096        res4e_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_28 (Add)                    (None, 14, 14, 1024) 0           bn4e_branch2c[0][0]              
+                                                                 activation_83[0][0]              
+__________________________________________________________________________________________________
+activation_86 (Activation)      (None, 14, 14, 1024) 0           add_28[0][0]                     
+__________________________________________________________________________________________________
+res4f_branch2a (Conv2D)         (None, 14, 14, 256)  262400      activation_86[0][0]              
+__________________________________________________________________________________________________
+bn4f_branch2a (BatchNormalizati (None, 14, 14, 256)  1024        res4f_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_87 (Activation)      (None, 14, 14, 256)  0           bn4f_branch2a[0][0]              
+__________________________________________________________________________________________________
+res4f_branch2b (Conv2D)         (None, 14, 14, 256)  590080      activation_87[0][0]              
+__________________________________________________________________________________________________
+bn4f_branch2b (BatchNormalizati (None, 14, 14, 256)  1024        res4f_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_88 (Activation)      (None, 14, 14, 256)  0           bn4f_branch2b[0][0]              
+__________________________________________________________________________________________________
+res4f_branch2c (Conv2D)         (None, 14, 14, 1024) 263168      activation_88[0][0]              
+__________________________________________________________________________________________________
+bn4f_branch2c (BatchNormalizati (None, 14, 14, 1024) 4096        res4f_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_29 (Add)                    (None, 14, 14, 1024) 0           bn4f_branch2c[0][0]              
+                                                                 activation_86[0][0]              
+__________________________________________________________________________________________________
+activation_89 (Activation)      (None, 14, 14, 1024) 0           add_29[0][0]                     
+__________________________________________________________________________________________________
+res5a_branch2a (Conv2D)         (None, 7, 7, 512)    524800      activation_89[0][0]              
+__________________________________________________________________________________________________
+bn5a_branch2a (BatchNormalizati (None, 7, 7, 512)    2048        res5a_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_90 (Activation)      (None, 7, 7, 512)    0           bn5a_branch2a[0][0]              
+__________________________________________________________________________________________________
+res5a_branch2b (Conv2D)         (None, 7, 7, 512)    2359808     activation_90[0][0]              
+__________________________________________________________________________________________________
+bn5a_branch2b (BatchNormalizati (None, 7, 7, 512)    2048        res5a_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_91 (Activation)      (None, 7, 7, 512)    0           bn5a_branch2b[0][0]              
+__________________________________________________________________________________________________
+res5a_branch2c (Conv2D)         (None, 7, 7, 2048)   1050624     activation_91[0][0]              
+__________________________________________________________________________________________________
+res5a_branch1 (Conv2D)          (None, 7, 7, 2048)   2099200     activation_89[0][0]              
+__________________________________________________________________________________________________
+bn5a_branch2c (BatchNormalizati (None, 7, 7, 2048)   8192        res5a_branch2c[0][0]             
+__________________________________________________________________________________________________
+bn5a_branch1 (BatchNormalizatio (None, 7, 7, 2048)   8192        res5a_branch1[0][0]              
+__________________________________________________________________________________________________
+add_30 (Add)                    (None, 7, 7, 2048)   0           bn5a_branch2c[0][0]              
+                                                                 bn5a_branch1[0][0]               
+__________________________________________________________________________________________________
+activation_92 (Activation)      (None, 7, 7, 2048)   0           add_30[0][0]                     
+__________________________________________________________________________________________________
+res5b_branch2a (Conv2D)         (None, 7, 7, 512)    1049088     activation_92[0][0]              
+__________________________________________________________________________________________________
+bn5b_branch2a (BatchNormalizati (None, 7, 7, 512)    2048        res5b_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_93 (Activation)      (None, 7, 7, 512)    0           bn5b_branch2a[0][0]              
+__________________________________________________________________________________________________
+res5b_branch2b (Conv2D)         (None, 7, 7, 512)    2359808     activation_93[0][0]              
+__________________________________________________________________________________________________
+bn5b_branch2b (BatchNormalizati (None, 7, 7, 512)    2048        res5b_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_94 (Activation)      (None, 7, 7, 512)    0           bn5b_branch2b[0][0]              
+__________________________________________________________________________________________________
+res5b_branch2c (Conv2D)         (None, 7, 7, 2048)   1050624     activation_94[0][0]              
+__________________________________________________________________________________________________
+bn5b_branch2c (BatchNormalizati (None, 7, 7, 2048)   8192        res5b_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_31 (Add)                    (None, 7, 7, 2048)   0           bn5b_branch2c[0][0]              
+                                                                 activation_92[0][0]              
+__________________________________________________________________________________________________
+activation_95 (Activation)      (None, 7, 7, 2048)   0           add_31[0][0]                     
+__________________________________________________________________________________________________
+res5c_branch2a (Conv2D)         (None, 7, 7, 512)    1049088     activation_95[0][0]              
+__________________________________________________________________________________________________
+bn5c_branch2a (BatchNormalizati (None, 7, 7, 512)    2048        res5c_branch2a[0][0]             
+__________________________________________________________________________________________________
+activation_96 (Activation)      (None, 7, 7, 512)    0           bn5c_branch2a[0][0]              
+__________________________________________________________________________________________________
+res5c_branch2b (Conv2D)         (None, 7, 7, 512)    2359808     activation_96[0][0]              
+__________________________________________________________________________________________________
+bn5c_branch2b (BatchNormalizati (None, 7, 7, 512)    2048        res5c_branch2b[0][0]             
+__________________________________________________________________________________________________
+activation_97 (Activation)      (None, 7, 7, 512)    0           bn5c_branch2b[0][0]              
+__________________________________________________________________________________________________
+res5c_branch2c (Conv2D)         (None, 7, 7, 2048)   1050624     activation_97[0][0]              
+__________________________________________________________________________________________________
+bn5c_branch2c (BatchNormalizati (None, 7, 7, 2048)   8192        res5c_branch2c[0][0]             
+__________________________________________________________________________________________________
+add_32 (Add)                    (None, 7, 7, 2048)   0           bn5c_branch2c[0][0]              
+                                                                 activation_95[0][0]              
+__________________________________________________________________________________________________
+activation_98 (Activation)      (None, 7, 7, 2048)   0           add_32[0][0]                     
+__________________________________________________________________________________________________
+avg_pool (GlobalAveragePooling2 (None, 2048)         0           activation_98[0][0]              
+______________________________________________________________________________________________
 
-- **Option 1**
-    - 🍴 Fork this repo!
-
-- **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/joanaz/HireDot2.git`
-
-### Step 2
-
-- **HACK AWAY!** 🔨🔨🔨
-
-### Step 3
-
-- 🔃 Create a new pull request using <a href="https://github.com/joanaz/HireDot2/compare/" target="_blank">`https://github.com/joanaz/HireDot2/compare/`</a>.
-
----
-
-## Team
-
-> Or Contributors/People
-
-| <a href="http://fvcproductions.com" target="_blank">**FVCproductions**</a> | <a href="http://fvcproductions.com" target="_blank">**FVCproductions**</a> | <a href="http://fvcproductions.com" target="_blank">**FVCproductions**</a> |
-| :---: |:---:| :---:|
-| [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com)    | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com) | [![FVCproductions](https://avatars1.githubusercontent.com/u/4284691?v=3&s=200)](http://fvcproductions.com)  |
-| <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> | <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> | <a href="http://github.com/fvcproductions" target="_blank">`github.com/fvcproductions`</a> |
-
-- You can just grab their GitHub profile image URL
-- You should probably resize their picture using `?s=200` at the end of the image URL.
-
----
-
-## FAQ
-
-- **How do I do *specifically* so and so?**
-    - No problem! Just do this.
-
----
-
-## Support
-
-Reach out to me at one of the following places!
-
-- Website at <a href="http://fvcproductions.com" target="_blank">`fvcproductions.com`</a>
-- Twitter at <a href="http://twitter.com/fvcproductions" target="_blank">`@fvcproductions`</a>
-- Insert more social links here.
-
----
-
-## Donations (Optional)
-
-- You could include a <a href="https://cdn.rawgit.com/gratipay/gratipay-badge/2.3.0/dist/gratipay.png" target="_blank">Gratipay</a> link as well.
-
-[![Support via Gratipay](https://cdn.rawgit.com/gratipay/gratipay-badge/2.3.0/dist/gratipay.png)](https://gratipay.com/fvcproductions/)
-
-
----
-
-## License
-
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
-
-- **[MIT license](http://opensource.org/licenses/mit-license.php)**
-- Copyright 2015 © <a href="http://fvcproductions.com" target="_blank">FVCproductions</a>.
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_4 (InputLayer)            (None, 35)           0                                            
+__________________________________________________________________________________________________
+input_3 (InputLayer)            (None, 2048)         0                                            
+__________________________________________________________________________________________________
+embedding_1 (Embedding)         (None, 35, 50)       92400       input_4[0][0]                    
+__________________________________________________________________________________________________
+dropout_1 (Dropout)             (None, 2048)         0           input_3[0][0]                    
+__________________________________________________________________________________________________
+dropout_2 (Dropout)             (None, 35, 50)       0           embedding_1[0][0]                
+__________________________________________________________________________________________________
+dense_1 (Dense)                 (None, 256)          524544      dropout_1[0][0]                  
+__________________________________________________________________________________________________
+lstm_1 (LSTM)                   (None, 256)          314368      dropout_2[0][0]                  
+__________________________________________________________________________________________________
+add_33 (Add)                    (None, 256)          0           dense_1[0][0]                    
+                                                                 lstm_1[0][0]                     
+__________________________________________________________________________________________________
+dense_2 (Dense)                 (None, 256)          65792       add_33[0][0]                     
+__________________________________________________________________________________________________
+dense_3 (Dense)                 (None, 1848)         474936      dense_2[0][0]                    
+```
