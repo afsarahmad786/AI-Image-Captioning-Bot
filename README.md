@@ -2,16 +2,14 @@
 
 ## Table of Contents (Optional)
 
-> If your `README` has a lot of info, section headers might be nice.
-
-- [Data collection](#Data collection)
-- [Understanding the data](#Understanding the data)
-- [Data Cleaning](#Data Cleaning)
-- [Loading the training setTeam](#Loading the training set)
-- [Data Preprocessing — Images](#Data Preprocessing — Images)
-- [Data Preprocessing — Captions](#Data Preprocessing — Captions)
-- [Word Embeddings](#Word Embeddings)
-- [Model Architecture](#Model Architecture)
+- [Data collection](#Data_collection)
+- [Understanding the data](#Understanding_data)
+- [Data Cleaning](#Data_Cleaning)
+- [Loading the training setTeam](#Loading_the_training set)
+- [Data Preprocessing — Images](#Data_Preprocessing_Images)
+- [Data Preprocessing — Captions](#Data_Preprocessing_Captions)
+- [Word Embeddings](#Word_Embeddings)
+- [Model Architecture](#Model_Architecture)
 
 ---
 
