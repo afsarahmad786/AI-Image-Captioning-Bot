@@ -49,8 +49,6 @@
 ## Word_Embeddings
 - then convert into word embeddings using glove-vector
 
-> To get started...
-
 ### Model_Architecture
 - This is how our model strucure look like
 - we change number of class and merge Rnn model with it
