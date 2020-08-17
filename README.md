@@ -5,7 +5,7 @@
 - [Data collection](#Data_collection)
 - [Understanding the data](#Understanding_data)
 - [Data Cleaning](#Data_Cleaning)
-- [Loading the training setTeam](#Loading_the_training set)
+- [Loading the training setTeam](#Loading_the_training_set)
 - [Data Preprocessing — Images](#Data_Preprocessing_Images)
 - [Data Preprocessing — Captions](#Data_Preprocessing_Captions)
 - [Word Embeddings](#Word_Embeddings)
@@ -20,23 +20,25 @@
 ### from pip
 - `pip install tensorflow-gpu` 
 
-## Data collection
+## Data_collection
 - <a href="https://www.kaggle.com/ming666/flicker8k-dataset" target="_blank">Data Set</a> .
 
 ---
 
-## Understanding the data
+## Understanding_data
 - Data set consist of 8000 images . each consist of 5 captions describing about the image.
 
-## Data Cleaning
+## Data_Cleaning
 - For cleaning the data we used Resnet50 inbuilt Preprocess_input Function to preprocess the image
 
-## Loading the training setData Cleaning
+## Loading_the_training_set
 - We encode the image by loading each image with help of load_img set target size 224x224 bcoz of Resnet50
 - We convert the image to arrays and expand its dimension bcoz it expects batch size also
 - then call keras preprocess_input on each image
+## Data_Preprocessing_Images
+- we'll use keras Preprocess_input Function to preprocess the image
 
-## Data Preprocessing — Captions
+## Data_Preprocessing_Captions
 - First load the captions 
 - Convert it to Lower case
 - remove everything which are not words
@@ -44,12 +46,12 @@
 - Convert every token into index and vice versa
 ---
 
-## Word Embeddings
+## Word_Embeddings
 - then convert into word embeddings using glove-vector
 
 > To get started...
 
-### Model Architecture
+### Model_Architecture
 - This is how our model strucure look like
 - we change number of class and merge Rnn model with it
 ```shell
